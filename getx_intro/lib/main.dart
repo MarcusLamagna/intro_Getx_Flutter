@@ -50,13 +50,20 @@ class HomePage extends StatelessWidget {
               controller: textController,
             ),
             //Botão
-            ElevatedButton(
-              onPressed: () {
-                String value = textController.text;
-                //Definindo valor da variável qeu recebe o value
-                valueController.setValue(value);
+            GetBuilder<ValueController>(
+              init: valueController,
+              builder: (ctrl) {
+                return ctrl.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          String value = textController.text;
+                          //Definindo valor da variável qeu recebe o value
+                          valueController.setValue(value);
+                        },
+                        child: const Text('Confirmar'),
+                      );
               },
-              child: const Text('Confirmar'),
             ),
           ],
         ),
