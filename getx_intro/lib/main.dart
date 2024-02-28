@@ -39,32 +39,29 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Valor
-            GetBuilder<ValueController>(
-              init: valueController,
-              builder: (ctrl) {
-                return Text('Valor definido: ${ctrl.definedValue}');
-              },
-            ),
+            Obx(() {
+              return Text('Valor definido: ${valueController.definedValue}');
+            }),
             //Campo de texto
-            TextField(
-              controller: textController,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: TextField(
+                controller: textController,
+              ),
             ),
             //Botão
-            GetBuilder<ValueController>(
-              init: valueController,
-              builder: (ctrl) {
-                return ctrl.isLoading
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () {
-                          String value = textController.text;
-                          //Definindo valor da variável qeu recebe o value
-                          valueController.setValue(value);
-                        },
-                        child: const Text('Confirmar'),
-                      );
-              },
-            ),
+            Obx(() {
+              return valueController.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () {
+                        String value = textController.text;
+                        //Definindo valor da variável qeu recebe o value
+                        valueController.setValue(value);
+                      },
+                      child: const Text('Confirmar'),
+                    );
+            }),
           ],
         ),
       ),
